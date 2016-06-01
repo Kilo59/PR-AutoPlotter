@@ -1,7 +1,7 @@
 '''
 Guilford College
 Summer 16
-Goal: Demostration of gspread api to read data from a Google Spreadsheet, manipulate it in Python and write it back to the Spreadsheet
+Goal: Demonstration of gspread api to read data from a Google Spreadsheet, manipulate it in Python and write it back to the Spreadsheet
 Stretch Goal: Multiple computational examples (Biology relavant), calculate compute time (append to Gsheet)
 '''
 import gspread  #api to interface with Google Sheets
@@ -79,7 +79,7 @@ for i in range(len(colD)):
 colA = [int(i) for i in colA]
 
     ##Compute Data##
-OnlyBioinformatic = False #Change to shorten runTime
+OnlyBioinformatic = False #Set 'True' to skip non-Bioinformatic, shorten runTime
         ##Integer/Numerical Data
 colA_max_value = max(colA)
 colA_min_value = min(colA)
