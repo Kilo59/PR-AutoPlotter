@@ -206,13 +206,9 @@ print(str(runTime) + 'seconds')
 
 #Create and Write CSV files
 with open('columnA.csv', 'w', newline='') as csvfile:
-    col_writer = csv.writer(csvfile, delimiter=' ')
-    col_writer.writerow([colA_header])
-    for i in range(len(colA_full)):
-        col_writer.writerow([colA_full[i]])
+dataIO.singleCol_CSV('columnA.csv', colA_header, colA_full)
+dataIO.singleCol_CSV('columnB.csv', colB_header, colB_full)
 
-with open('columnB.csv', 'w', newline='') as csvfile:
-    col_writer = csv.writer(csvfile, delimiter=' ')
-    col_writer.writerow([colB_header])
-    for i in range(len(colB_full)):
-        col_writer.writerow([colB_full[i]])
+seq_match_header = [colC[0], "Matches"]
+seq_match_list = [colD, pattern_match_list]
+dataIO.doubleCol_CSV('SequenceMatch.csv', seq_match_header, seq_match_list)
