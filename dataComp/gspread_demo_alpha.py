@@ -5,14 +5,21 @@ Goal: Demonstration of gspread api to read data from a Google Spreadsheet, manip
 Stretch Goal: Multiple computational examples (Biology relavant), calculate compute time (append to Gsheet)
 '''
 import gspread  #api to interface with Google Sheets
+import csv #for reading and writing .csv files
 from oauth2client.service_account import ServiceAccountCredentials #to authorize GAPP access
 import RunTime #to calculate script run-time
 import demoFunc #various computational functions
 
 start_time = RunTime.currentTime()#Store script start-time
 
+###################SUBSITUTE Sheet Name & JSONfile/filename#####################
+google_sheet_name = 'your_Gsheet_Name' #****************************************REPLACE*
+
+
     ##Recieve GoogleApp authorization from JSON file stored in directory##
-JSONfilename = 'dummyAuthorization.json' #must match JSON filename
+JSONfilename = 'dummyAuthorization.json' #must match JSON filename**************REPLACE*
+
+
 scope = ['https://spreadsheets.google.com/feeds']
 credentials = ServiceAccountCredentials.from_json_keyfile_name(JSONfilename, scope)
 gc = gspread.authorize(credentials)
@@ -20,11 +27,12 @@ gc = gspread.authorize(credentials)
 *IMPORTANT STEP: SpreadSheet must be shared(edit perm.) with the 'client_email' within the JSONfile in this case,
 'client_email' = client_email@appspot.gserviceaccount.com
 '''
+#################END############################################################
 
     ##Select Google Spreadsheet/Worksheet and create Worksheets##
 
 ##open spreadsheet by 'title', api supports alternates methods via URL, etc.
-g_sheet = gc.open("your_Gsheet_Name") #Google Sheet filename
+g_sheet = gc.open(google_sheet_name) #Google Sheet filename
 
 ##create worksheet for storing computed data with 51 rows and 4 columns
 if g_sheet.get_worksheet(1) == None: #2nd worksheet(@index=1) doesn't exist, create it
@@ -34,12 +42,6 @@ if g_sheet.get_worksheet(1) == None: #2nd worksheet(@index=1) doesn't exist, cre
 computed_ws = g_sheet.worksheet('computed') #select computed worksheet by 'title'
 data_ws = g_sheet.get_worksheet(0) #select Data worksheet by index
 
-'''
-cell_list = data_ws.range('E1:E25')
-for cell in cell_list:
-    cell.value = 'Done'
-'''
-data_ws.update_cells(cell_list)
     ##Read Data from spreadsheet##
 #NotUsed*dataDictionary = data_ws.get_all_records(empty2zero=False, head=1)#store all spreadsheet data in dictionary, ignore empty cells*
 
@@ -51,12 +53,6 @@ colA = (data_ws.col_values(1))
 colB = (data_ws.col_values(2))
 colC = (data_ws.col_values(3))
 colD = (data_ws.col_values(4))
-
-#remove and store column headers
-colA_header = colA.pop(0)
-colB_header = colB.pop(0)
-colC_header = colC.pop(0)
-colD_header = colD.pop(0)
 
 #remove empty values
 for i in range(len(colA)):
@@ -74,6 +70,19 @@ for i in range(len(colC)):
 for i in range(len(colD)):
     if colD.count('') > 0:
         del colD[colD.index('')]
+
+#store columns with headers, no alterations
+    ##not working, colX_full objects are being updated based on colX (alias?)
+colA_full = colA
+colB_full = colB
+colC_full = colC
+colD_full = colD
+
+# remove and store column headers
+colA_header = colA.pop(0)
+colB_header = colB.pop(0)
+colC_header = colC.pop(0)
+colD_header = colD.pop(0)
 
 #convert string values to integers for colA
 colA = [int(i) for i in colA]
@@ -139,33 +148,48 @@ process_runTime = RunTime.calc_runTime(start_time, proccess_end_time)
 print('*Data Proccessing Finished*')
 print(str(process_runTime) + 'seconds')
 
+
     ##Write Data back to spreadsheet##
+'''
+####Write in batch test##########
+cell_list = data_ws.range('E1:E25')
+for cell in cell_list:
+    cell.value = 'Done'
+
+data_ws.update_cells(cell_list)
 #template: computed_ws.update_cell(row, col, 'string')
+###Success
+'''
+
 #Write Column Headers
-headerRow = 1
-if OnlyBioinformatic == False:
-    computed_ws.update_cell(headerRow, 1, 'Num:NoDuplc.')
-    computed_ws.update_cell(headerRow, 2, 'String:NoDuplc.')
-    #computed_ws.update_cell(headerRow, 3, 'TBD')
-    #computed_ws.update_cell(headerRow, 4, 'Validation Fail')
-computed_ws.update_cell(headerRow, 3, colC[0]) #Genome1
-computed_ws.update_cell(headerRow, 4, 'Matches')
-#computed_ws.update_cell(headerRow, 7, colC[1]) #Genome2
-#computed_ws.update_cell(headerRow, 8, 'Matches')
+header_Row = computed_ws.range('A1:D1')
+header_Row[0].value = 'Num:NoDuplc.'
+header_Row[1].value = 'String:NoDuplc.'
+header_Row[2].value = colC[0]
+header_Row[3].value = 'Matches'
+computed_ws.update_cells(header_Row)
 
 #colA no duplicates, ascending order
-if OnlyBioinformatic == False:
-    for i in range(len(colA_no_duplicates)):
-        computed_ws.update_cell(i+2, 1, colA_no_duplicates[i])
-    #colB no duplicates
-    for i in range(len(colB_no_duplicates)):
-        computed_ws.update_cell(i+2, 2, colB_no_duplicates[i])
+columnA = computed_ws.range("A2:A51")
+for i in range(len(colA_no_duplicates)):
+    columnA[i].value = colA_no_duplicates[i]
+
+columnB = computed_ws.range("B2:B51")
+for i in range(len(colB_no_duplicates)):
+    columnB[i].value = colB_no_duplicates[i]
+
+computed_ws.update_cells(columnA)
+computed_ws.update_cells(columnB)
 
 #write Genome pattern with number of matches in adjacent colum
+columnC = computed_ws.range("C2:C51")
+columnD = computed_ws.range("D2:D51")
 for i in range(len(pattern_match_list)):
-    if i <= len(pattern_match_list):
-        computed_ws.update_cell(i+2, 3, colD[i])
-        computed_ws.update_cell(i+2, 4, pattern_match_list[i])
+    columnC[i].value = colD[i]
+    columnD[i].value = pattern_match_list[i]
+
+computed_ws.update_cells(columnC)
+computed_ws.update_cells(columnD)
 
 # Store script end-time
 end_time = RunTime.currentTime()
@@ -179,3 +203,16 @@ print(str(data_write_time) + 'seconds')
 
 print('***Finished***')
 print(str(runTime) + 'seconds')
+
+#Create and Write CSV files
+with open('columnA.csv', 'w', newline='') as csvfile:
+    col_writer = csv.writer(csvfile, delimiter=' ')
+    col_writer.writerow([colA_header])
+    for i in range(len(colA_full)):
+        col_writer.writerow([colA_full[i]])
+
+with open('columnB.csv', 'w', newline='') as csvfile:
+    col_writer = csv.writer(csvfile, delimiter=' ')
+    col_writer.writerow([colB_header])
+    for i in range(len(colB_full)):
+        col_writer.writerow([colB_full[i]])
