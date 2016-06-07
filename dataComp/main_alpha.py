@@ -5,20 +5,20 @@ Goal: Demonstration of gspread api to read data from a Google Spreadsheet, manip
 Stretch Goal: Multiple computational examples (Biology relavant), calculate compute time (append to Gsheet)
 '''
 import gspread  #api to interface with Google Sheets
-import csv #for reading and writing .csv files
 from oauth2client.service_account import ServiceAccountCredentials #to authorize GAPP access
-import RunTime #to calculate script run-time
-import demoFunc #various computational functions
+from functANDtests import RunTime #to calculate script run-time
+from functANDtests import demoFunc #various computational functions
+from functANDtests import dataIO #for data input/Output
 
 start_time = RunTime.currentTime()#Store script start-time
 
 ###################SUBSITUTE Sheet Name & JSONfile/filename#####################
 google_sheet_name = 'your_Gsheet_Name' #****************************************REPLACE*
-
+google_sheet_name = 'CAPSTONEgspread'
 
     ##Recieve GoogleApp authorization from JSON file stored in directory##
 JSONfilename = 'dummyAuthorization.json' #must match JSON filename**************REPLACE*
-
+JSONfilename = 'Authorization.json'
 
 scope = ['https://spreadsheets.google.com/feeds']
 credentials = ServiceAccountCredentials.from_json_keyfile_name(JSONfilename, scope)
@@ -31,7 +31,7 @@ gc = gspread.authorize(credentials)
 
     ##Select Google Spreadsheet/Worksheet and create Worksheets##
 
-##open spreadsheet by 'title', api supports alternates methods via URL, etc.
+##open spreadsheet by 'title', api supports alternate methods via URL, etc.
 g_sheet = gc.open(google_sheet_name) #Google Sheet filename
 
 ##create worksheet for storing computed data with 51 rows and 4 columns
@@ -43,7 +43,6 @@ computed_ws = g_sheet.worksheet('computed') #select computed worksheet by 'title
 data_ws = g_sheet.get_worksheet(0) #select Data worksheet by index
 
     ##Read Data from spreadsheet##
-#NotUsed*dataDictionary = data_ws.get_all_records(empty2zero=False, head=1)#store all spreadsheet data in dictionary, ignore empty cells*
 
 #determine data scope
 number_of_columns = data_ws.col_count
@@ -108,7 +107,7 @@ colB_distinct_items = demoFunc.distinct_items(colB)
         ##Bioinformatic Functions
     #read from file according to colC, append .txt, store as string
 Genome1 = demoFunc.read_text(colC[0]) #Genome1
-#Genome2 = demoFunc.read_text(colC[1]) #Genome2
+
     #find matches in GenomeString for eachGenome for items in colD
 pattern_match_list = []
 for genome in colC: #incomplete
@@ -148,18 +147,7 @@ process_runTime = RunTime.calc_runTime(start_time, proccess_end_time)
 print('*Data Proccessing Finished*')
 print(str(process_runTime) + 'seconds')
 
-
     ##Write Data back to spreadsheet##
-'''
-####Write in batch test##########
-cell_list = data_ws.range('E1:E25')
-for cell in cell_list:
-    cell.value = 'Done'
-
-data_ws.update_cells(cell_list)
-#template: computed_ws.update_cell(row, col, 'string')
-###Success
-'''
 
 #Write Column Headers
 header_Row = computed_ws.range('A1:D1')
@@ -205,7 +193,6 @@ print('***Finished***')
 print(str(runTime) + 'seconds')
 
 #Create and Write CSV files
-with open('columnA.csv', 'w', newline='') as csvfile:
 dataIO.singleCol_CSV('columnA.csv', colA_header, colA_full)
 dataIO.singleCol_CSV('columnB.csv', colB_header, colB_full)
 

@@ -1,10 +1,10 @@
 #dataIO
 import csv
 #Input/Output
-def singleCol_CSV(filename, header, item_list):
-    with open(filename, 'w', newline='') as csvfile:
+def singleCol_CSV(string_filename, string_header, item_list):
+    with open(string_filename, 'w', newline='') as csvfile:
         writer1 = csv.writer(csvfile, delimiter= ',')
-        writer1.writerow([header])
+        writer1.writerow([string_header])
         for i in range(len(item_list)):
             writer1.writerow([item_list[i]])
     return
