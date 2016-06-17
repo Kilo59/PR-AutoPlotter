@@ -1,5 +1,3 @@
+*.pyc
 dataComp/Authorization.json
-*.pyc
-dataComp/functANDtests/Python_to_R_test.py
-dataComp/__pycache__
-*.pyc
+dataComp/functANDtests/Py_R_test1.csv
