@@ -1,3 +1,7 @@
 *.pyc
 dataComp/Authorization.json
 dataComp/functANDtests/Py_R_test1.csv
+dataComp/functANDtests/Authorization.json
+dataComp/functANDtests/__pycache__/dataIO.cpython-35.pyc
+dataComp/SequenceMatch.csv
+dataComp/Vibrio_cholerae.txt
