@@ -12,6 +12,6 @@ Weekly(bi-weekly) meeting with Faculty advisors to demonstrate progress, refine 
 
 ###Plate-reader Wells
 ####[Well Label-Replacement Sheet](https://docs.google.com/spreadsheets/d/1fJhE1hOMqVvf5T8YHxRATOQ8QHKfujZRym2wk-tYq4I/pubhtml)
-![Well Guide](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/plate_reader/Microplate_simple.PNG?raw=true)
+![Well Guide](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/Microplate_simple.PNG?raw=true)
 
   
