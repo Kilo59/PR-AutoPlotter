@@ -4,7 +4,7 @@ from functANDtests import dataCowboy
 from functANDtests import RunTime
 from oauth2client.service_account import ServiceAccountCredentials #to authorize GAPP access
 #####|Functions|#####
-def gsheet_update(list_of_lists):
+def gsheet_update(list_of_lists, num_cols):
     ##Setup sheet write_range
     A = well_data.range('A1:A256')
     B = well_data.range('B1:B256')
@@ -215,22 +215,76 @@ def gsheet_update(list_of_lists):
             EL, EM, EN, EO, EP, EQ, ER, ES, ET, EU, EV, EW, EX, EY, EZ, FA, FB, FC, FD, FE, FF, FG, FH, FI, FJ, FK, FL,
             FM, FN, FO, FP, FQ, FR, FS, FT, FU, FV, FW, FX, FY, FZ, GA, GB, GC, GD, GE, GF, GG, GH, GI, GJ, GK, GL, GM,
             GN, GO, GP, GQ, GR, GS]
+
     # iterate through list_of_lists
-    for ls_index, (ls, col) in enumerate(zip(list_of_lists, A_GS)):
+    print( len(list_of_lists), "Columns to post" )
+    for ls_index, (ls, col) in enumerate(zip( list_of_lists, A_GS[:num_cols] )):
+        #print('a', ls_index)
         for cell_index, cell in enumerate(col):
             cell.value = ls[cell_index]
-
-    for col in A_GS:
+    #update google sheet by column
+    update_count = 0
+    for col in A_GS[:num_cols]: #list slicing to loop correct number of times
+        print('Column', update_count, 'posted')
+        update_count += 1
         well_data.update_cells(col)
     return
-
+def get_grouping_data():
+    g1 = well_grouping.col_values(1)
+    g2 = well_grouping.col_values(2)
+    g3 = well_grouping.col_values(3)
+    g4 = well_grouping.col_values(4)
+    g5 = well_grouping.col_values(5)
+    g6 = well_grouping.col_values(6)
+    g7 = well_grouping.col_values(7)
+    g8 = well_grouping.col_values(8)
+    g9 = well_grouping.col_values(9)
+    g10 = well_grouping.col_values(10)
+    g_list = [g1, g2, g3, g4, g5, g6, g7, g8, g9, g10]
+    return g_list
 ##############|Start|##########
 print("dataWrangle1.py")
 print("############|START|##########")
 full_print = True
-full_sheet_update = True
+#TODO: fix config parser error that occurs when run from the command line, due to path not being explicitly set?
+full_sheet_update = dataIO.get_start_cond_bol('post2google')
+input_csv = dataIO.get_start_cond('input_filename') #full filename of CSV file stored in working directory
+print('Input filename: ', input_csv)
+Rsub = dataIO.get_R_options("execute_r")
+#data must be greater than these values to pass validation
+#Set = 0 to accept all data
+RangeReq = dataIO.get_tolerance('rangeReq')
+MaxReq = dataIO.get_tolerance('maxReq')
+print('Tolerance: data will be ignored if it does not exceed these requirements')
+print('Range Requirement:', RangeReq)
+print('Max Value Requirement:', MaxReq)
 start_time = RunTime.currentTime()#start-time
+Remove_invalid_data = True
+grouping = True
+generate_r_grping_file = dataIO.get_R_options("gen_grping_file")
+print("Remove Invalid Data: ", Remove_invalid_data)
+print("R subprocess: ", Rsub)
+print("Group Data: ", grouping)
+print("Generate grouping.R file: ", generate_r_grping_file)
+print("Update Google Sheet: ", full_sheet_update)
+start = dataIO.get_start_cond('run')
+#*******TESTING******************TESTING**************#
 
+#******************END TESTING************************#
+if start == False:
+    print("**config.txt has \'run\' set to \'False\'**")
+    print("***STOPPING PROGRAM***")
+    quit()
+else:
+    print('**proceeding with Script**')
+
+##########Get Raw Data-set from Bioscreen CSV file############################
+number_of_rows_csv = dataIO.count_rows_CSV(input_csv)
+number_of_cols_csv = dataIO.count_columns_CSV(input_csv)
+original_csv_list_of_lists = dataIO.csv_list_of_lists(input_csv) #store data-set by columns as a list of lists
+##############################################################################
+
+#####|Google Sheet Setup|#####
 #Working Sheet Name
 google_sheet_name = 'plate_wells'
 #Setup GoogleApp Authrization/Credentials
@@ -242,35 +296,152 @@ gc = gspread.authorize(credentials)
 g_sheet = gc.open(google_sheet_name)
 #setup worksheet variables
 well_labels = g_sheet.worksheet('well_labels')
-#if 2nd worksheet(@index=1) doesn't exist, create it
-if g_sheet.get_worksheet(1) == None:
-    g_sheet.add_worksheet('well_data', number_of_rows_csv, number_of_cols_csv)
-#setup well_data worksheet object
-well_data = g_sheet.worksheet('well_data')
+print("****************************")
+print(well_labels.title)
+###############################
 
 #######Get Well Labels from Google Sheet######################################
 labels = dataCowboy.pl_rdr_single_list(well_labels.get_all_values())
 #use gspread to collect every cell value in well_wabels workseet, use dataCowboy to store values into a single list of 200 well labels
-if full_print == True:
-    print(labels)
+##############################################################################
 
-##########Get Raw Data-set from Bioscreen CSV file############################
-csv_file = 'raw_plate_reader.csv' #full filename of CSV file stored in working directory
-csv_list_of_lists = dataIO.csv_list_of_lists(csv_file) #store data-set by columns as a list of lists
-if full_print == True:
-    dataIO.print_data_lists(csv_list_of_lists)
+#####Replace Headers#####
+updated_lists = dataCowboy.header_replacement(original_csv_list_of_lists, labels)
+###################|Data Validation|####################
 
-#####Replace Headers####
-updated_lists = dataCowboy.header_replacement(csv_list_of_lists, labels)
-dataIO.print_data_lists(updated_lists)
+########|Python Summary Data|##########
+#print summary data for every column, skip item 0 (the header)
+print("###|Summary Data|###")
+print("#        Range  | Min   Max      Mean   |        First Last    Name")
+count = 1
+range_list = [0]
+min_list = [0]
+max_list = [0]
+mean_list = [0]
+pass_fail = ''
+for index, ls in enumerate(updated_lists[1:]):
+    range_val = round(float(max(ls[1:])) - float(min(ls[1:])), 3)
+    min_val = min(ls[1:])
+    max_val = max(ls[1:])
+    mean = round( dataCowboy.list_mean(ls[1:]), 3 )
+    first = ls[1]
+    last = ls[len(ls)-1]
+    #store summary data in seperate lists for later use in data validation/checking
+    range_list.append(float(range_val))
+    min_list.append(float(min_val))
+    max_list.append(float(max_val))
+    mean_list.append(float(mean))
+
+    if range_list[index+1] > RangeReq or max_list[index+1] > MaxReq:
+        pass_fail = ' '
+    else:
+        pass_fail = 'X'
+        #print (range_list[index+1], max_list[index+1])
+    print(str(count) + '\t', range_val, '\t|', min_val, max_val, '\t', mean, '\t|\t', first, last, pass_fail, ls[0])
+
+    count += 1
+print("#        Range  | Min   Max      Mean   |        First Last    Name")
+#######################################
+
+########|Validation Check|##########<
+print("#####|Validation Check|####")
+#store index number of invalid data
+exclude_list = []
+pass_list = []
+if RangeReq > 0 or MaxReq > 0:
+    for index in range(len(range_list)):
+        ##print(index, range_list[index], max_list[index])
+        #skip index = 0 (string headers)
+        if index > 0:
+            #Data check passes if either condition passes
+            #(change 'or' to 'and' for more stringent check)
+            if range_list[index] > RangeReq or max_list[index] > MaxReq:
+                ##print(index, "Pass")
+                pass_list.append(index)
+            else:
+                exclude_list.append(index)
+
+failed_checks = len(exclude_list)
+print("Failed Checks:", failed_checks)
+
+#Remove invalid data from 'updated list'
+if Remove_invalid_data == True:
+    #iterating and deleting in forward direction will break the loop after 1st del operation
+    for index, ls in reversed(list(enumerate(updated_lists))):
+        if index in exclude_list:
+            #print(index, "Excluded")
+            del updated_lists[index]
+
+if Remove_invalid_data == True:
+    print('Data Excluded:', failed_checks, 'wells')
+else:
+    print('Data Excluded:', 'None')
+
+if full_print == True and Remove_invalid_data == True:
+    print( exclude_list[0:int(len(exclude_list)/2)])
+    print( exclude_list[int(len(exclude_list)/2):])
+###|Create updated CSV file|###
+dataIO.multiCol_CSV('updated_plate_reader.csv', updated_lists)
+###|Create grouping.R file|###
+if generate_r_grping_file == True:
+    pass
+####################################>
+
+#######################################################
 
 #####Update Spreadsheet#####
-if full_sheet_update == True:
-    gsheet_update(updated_lists)
+#check if there is a "well_grouping" worksheet at index 1
+wks1 = g_sheet.get_worksheet(1)
+if type(wks1) is gspread.models.Worksheet:
+    print("Worksheet @index 1:", wks1.title)
+    if wks1.title != 'well_grouping': #check title of worksheet
+        print("****Error: 'well_grouping' worksheet not setup, (or improperly named)")
+        grouping = False
+    else:
+        print("*Grouping worksheet found*")
+        grouping = True
+#Check if there is a worksheet at index 2
+wks2 = g_sheet.get_worksheet(2)
+if type(wks2) is gspread.models.Worksheet:
+    print("Worksheet @index 2:", wks2.title)
+    if wks2.title == 'well_data' and full_sheet_update == True:    #check the title of the worksheet
+        print("Delete", g_sheet.sheet1)
+        g_sheet.del_worksheet(wks2)
+    if wks2.title == 'well_labels':
+        print("****Error: Move 'well_labels' worksheet to index 0 ")
+        full_sheet_update = False
+#if 2nd worksheet(@index=1) doesn't exist, create it
+#####****************************************>>>>>>>>>CHANGE TO ROWS/COLS OF UPDATED CSV
+number_of_cols = len(updated_lists)
+if g_sheet.get_worksheet(2) == None:
+    g_sheet.add_worksheet('well_data', number_of_rows_csv, 201)
 
+#setup well_data worksheet & well_grouping worksheet objects
+well_data = g_sheet.worksheet('well_data')
+well_grouping = g_sheet.worksheet('well_grouping')
+
+####|Grouping Begin|##
+if generate_r_grping_file == True:
+    group_names = dataIO.group_names(get_grouping_data())
+    print('Group names:', group_names)
+    dataIO.write_r_grping_file(get_grouping_data())
+    print('***|grouping.R UPDATED|***')
+
+########|R subprocess|########<
+#TODO: handle case where generate_r_grping_file = False but Rub = True
+if Rsub == True:
+    dataIO.exec_script('Rscript', 'plot_data.R', group_names)
+##############################>
+####|Grouping End|##
+
+##########TO DO: Handle error that occurs when well_data sheet has less than 201 columns
+if full_sheet_update == True:
+    gsheet_update(updated_lists, number_of_cols)
+    print(well_data.updated)
+else:
+    print("*Set \'post2google = True\' to upload data to the Google Spreadsheet*")
 #######| END |########
 end_time = RunTime.currentTime()#start-time
 run_time = RunTime.calc_runTime(start_time, end_time)
 print("############|END|##########")
 print(run_time)
-

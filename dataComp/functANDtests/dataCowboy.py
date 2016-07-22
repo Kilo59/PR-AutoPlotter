@@ -61,3 +61,16 @@ def single_list_to_grouped_list(single_list):
 
     return list_of_list
 '''
+#####|Math/Misc|####
+
+def list_sum(number_list):
+    sum_of_list = 0.0
+    for item in number_list:
+        sum_of_list += float(item)
+    return sum_of_list
+
+def list_mean(number_list):
+    sum_ls = list_sum(number_list)
+    n = len(number_list)
+    mean = sum_ls/n
+    return mean
