@@ -1,6 +1,6 @@
 # Plate-reader Automated Data Wrangler
-####Input data: Bioscreen derived .CSV file | [Output](https://docs.google.com/spreadsheets/d/1fJhE1hOMqVvf5T8YHxRATOQ8QHKfujZRym2wk-tYq4I/pubhtml "Output Sheet")
-
+####Input data: Bioscreen derived .CSV file 
+####Output: [Spreadsheet](https://docs.google.com/spreadsheets/d/1fJhE1hOMqVvf5T8YHxRATOQ8QHKfujZRym2wk-tYq4I/pubhtml "Output Sheet") | [Plotly: ggplot](https://dashboards.ly/ua-3iqBAQDFa93xVVHraRB3Tm "Plotly Dashboard")
 ##Platform Description/Scope:
 Create a data processing/analytics platform to process/compute data stored locally and in Google Cloud Applications and output to Web-based interactive front end.  
 ##Methods and Materials to be Used:
