@@ -194,15 +194,17 @@ def setup_ggploter(list_of_items_to_plot):
     list_of_items = group_items(list_of_items_to_plot)
     ls_of_strings = []
     color = ['black', 'red', 'blue', 'orange', 'green']
+    plot_list_str = 'plot_list <-c('
     for group_index, group in enumerate(list_of_plots):
         string1 = 'g'+str(group_index+1)+' <- ggplot()+'
+        plot_list_str += '\'g'+str(group_index+1)+'\', '
         ls_of_strings.append(string1)
         for index, well in enumerate(list_of_items[group_index]):
             string_point = 'geom_point(data = dat1, aes(Time, dat1$'+str(well)+'), color = \''+str(color[index])+'\') +'
             #print(string_point) #test print
             ls_of_strings.append(string_point)
         #setup ggplot labs() function
-        string_labs='labs(title = '+str(group)+', x= \'Time\', y = \'Optical Density\') +'
+        string_labs='labs(title = \''+str(group)+'\', x= \'Time\', y = \'Optical Density\') +'
         ls_of_strings.append(string_labs)
         #setup ggplot theme() function
         string_theme='theme( axis.text.x= element_text(angle = 80, size = 7, vjust = 0.5) )\n'
@@ -213,6 +215,12 @@ def setup_ggploter(list_of_items_to_plot):
         #setup ggplot ggsave() function
         string_ggsave='ggsave(image_name, width = 22, height = 8)\n'
         ls_of_strings.append(string_ggsave)
+    #setup plot_list section label
+    pl_ls_label = '####plot_list vector####'
+    ls_of_strings.append(pl_ls_label)
+    #setup plot_list vector
+    plot_list_str = plot_list_str[:len(plot_list_str)-2]+')'
+    ls_of_strings.append(plot_list_str)
     return ls_of_strings
 def write_ggploter(filename, list_of_items_to_plot):
     write_line_a(filename, '\n\n####ggplots####')

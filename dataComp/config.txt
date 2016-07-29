@@ -6,5 +6,5 @@ input_filename = raw_plate_reader.csv
 rangeReq = 0.15
 maxReq = 0.095
 [r_options]
-execute_r = True
+execute_r = False
 gen_grping_file = True

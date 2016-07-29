@@ -1,18 +1,23 @@
 #install.packages("plotly")
 library(plotly)
-
+Sys.setenv("plotly_username"= " ") #add plotly account username 
+Sys.setenv("plotly_api_key"= " ") #add plotly accound api key
 # Fetch command line arguments
 myArgs <- commandArgs(trailingOnly = TRUE)
-# Convert to numerics
-#argNums = as.numeric(myArgs)
 #write to stdout stream
-#cat(max(argNums))
+#cat()
 myArgs
 
 filename <- "updated_plate_reader.csv"
 dat1 <- read.csv(filename)
 
 source("grouping.R", echo = TRUE)
+
+for (plot in plot_list)
+{
+  print(plot)
+  plotly_POST( eval(as.name(plot)), plot )
+}
 
 #find scope of data, y_range = maximum OD reading
 #skip Time column
