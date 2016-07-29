@@ -1,9 +1,0 @@
-[start_conditions]
-run = True
-input_filename = raw_plate_reader.csv
-[tolerance]
-rangeReq = 0.15
-maxReq = 0.095
-[r_options]
-execute_r = True
-gen_grping_file = True
