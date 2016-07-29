@@ -1,5 +1,6 @@
 #dataIO
 from functANDtests import RunTime
+#import RunTime #when running tests in functANDtests folder
 import csv
 import subprocess
 import os
@@ -80,44 +81,57 @@ def readAll_CSV_reader(string_filename):
     return csv_as_list
 
 def csv_list_of_lists(string_filename):
-    headers = firstRow_CSV_reader(string_filename)
-    with open(string_filename) as csvfile:
-        reader3 = csv.DictReader(csvfile)
-        list1 = [[] for x in range(len(headers))]
-        for ls, header in zip(list1, headers):
-            ls.append(header)
-        for row in reader3:
-            #print(row['Time'], row['Well 101'], row['Well 300'])
-            for col_list in list1:
-                col_list.append(row[col_list[0]])
-    return list1
+    #check that file exists
+    if check_file(string_filename) == True:
+        headers = firstRow_CSV_reader(string_filename)
+        with open(string_filename) as csvfile:
+            reader3 = csv.DictReader(csvfile)
+            list1 = [[] for x in range(len(headers))]
+            for ls, header in zip(list1, headers):
+                ls.append(header)
+            for row in reader3:
+                #print(row['Time'], row['Well 101'], row['Well 300'])
+                for col_list in list1:
+                    col_list.append(row[col_list[0]])
+        return list1
+    else:
+        return []
+
+def check_file(filename):
+    filefound = True
+    try:
+        fh = open(filename, 'r')
+        fh.close()
+    except IOError:
+        print('**ERROR: CAN\'NT FIND FILE\n***MAKE SURE THE CONFIG SETTINGS MATCH THE EXPECTED FILENAME')
+        filefound = False
+    except:
+        print('**ERROR: UNKNOWN EXCEPTION OCCURED')
+        filefound = False
+    else:
+        print('*FILE', filename, 'FOUND')
+        filefound = True
+    return filefound
+
+def check_file_silent(filename):
+    filefound = True
+    try:
+        fh = open(filename, 'r')
+        fh.close()
+    except:
+        filefound = False
+    else:
+        filefound = True
+    return filefound
+
+def exit_without_file(filename):
+    filefound = check_file_silent(filename)
+    if filefound != True: #if check_file_silent recieves exception
+        quit()
+    return
 
 ########|CSV Output|########
 
-'''
-#length of each list must be the same
-def colList_to_rowList(list_of_columns):
-    #lists should have the same length
-    list_of_rows = list_n( len(list_of_columns[0]) )
-
-    list_of_rows[0].append(list_of_columns[0][0])
-    list_of_rows[0].append(list_of_columns[1][0])
-    list_of_rows[0].append(list_of_columns[2][0])
-
-    list_of_rows[1].append(list_of_columns[0][1])
-    list_of_rows[1].append(list_of_columns[1][1])
-    list_of_rows[1].append(list_of_columns[2][1])
-
-    list_of_rows[2].append(list_of_columns[0][2])
-    list_of_rows[2].append(list_of_columns[1][2])
-    list_of_rows[2].append(list_of_columns[2][2])
-
-    list_of_rows[3].append(list_of_columns[0][3])
-    list_of_rows[3].append(list_of_columns[1][3])
-    list_of_rows[3].append(list_of_columns[2][3])
-
-    return list_of_rows
-'''
 #**used in multiCol_CSV function**
 #takes a list of lists (where each list repesents a column of data)
 #sorts it into to a list of list where each list represents a row
@@ -150,7 +164,6 @@ def singleCol_CSV(string_filename, string_header, item_list):
             writer1.writerow([item_list[i]])
     return
 
-
 #Columns must be past be passed in as a list of lists, each with the same length
 def doubleCol_CSV(filename, header_list, list_of_columns):
     with open(filename, 'w', newline='') as csvfile:
@@ -165,6 +178,48 @@ def doubleCol_CSV(filename, header_list, list_of_columns):
     return
 
 #####|Misc file output|#####
+#TODO write functions to write to file line by line
+#writes string to file
+def write_line_a(filename, string):
+    with open(filename, 'a') as f:
+        f.write(string+'\n')
+    return
+def append_list_of_string(filename, ls):
+    for item in ls:
+        write_line_a(filename, item)
+    return
+#take list of group names, create r code for ggplots of each group
+def setup_ggploter(list_of_items_to_plot):
+    list_of_plots = group_names(list_of_items_to_plot)
+    list_of_items = group_items(list_of_items_to_plot)
+    ls_of_strings = []
+    color = ['black', 'red', 'blue', 'orange', 'green']
+    for group_index, group in enumerate(list_of_plots):
+        string1 = 'g'+str(group_index+1)+' <- ggplot()+'
+        ls_of_strings.append(string1)
+        for index, well in enumerate(list_of_items[group_index]):
+            string_point = 'geom_point(data = dat1, aes(Time, dat1$'+str(well)+'), color = \''+str(color[index])+'\') +'
+            #print(string_point) #test print
+            ls_of_strings.append(string_point)
+        #setup ggplot labs() function
+        string_labs='labs(title = '+str(group)+', x= \'Time\', y = \'Optical Density\') +'
+        ls_of_strings.append(string_labs)
+        #setup ggplot theme() function
+        string_theme='theme( axis.text.x= element_text(angle = 80, size = 7, vjust = 0.5) )\n'
+        ls_of_strings.append(string_theme)
+        #setup image_name variable *needed for ggsave()
+        str_image_name='image_name <- paste(\''+str(group)+'\', \'.png\', sep = \'\')'
+        ls_of_strings.append(str_image_name)
+        #setup ggplot ggsave() function
+        string_ggsave='ggsave(image_name, width = 22, height = 8)\n'
+        ls_of_strings.append(string_ggsave)
+    return ls_of_strings
+def write_ggploter(filename, list_of_items_to_plot):
+    write_line_a(filename, '\n\n####ggplots####')
+    ls_of_strings = setup_ggploter(list_of_items_to_plot)
+    append_list_of_string(filename, ls_of_strings)
+    print('*',filename,': ggplots created')
+    return
 #return group names
 def group_names(g_list):
     #cleanup lists
@@ -175,22 +230,25 @@ def group_names(g_list):
             if g.count('') > 0:
                 del g[g.index('')]
         if len(g) <= 1:
-            del g[g.index(g[0])]
+            #del g[g.index(g[0])]
             lists -= 1
     g_list = g_list[:lists]
     group_list = [g_list[x][0] for x in range(0, len(g_list))]
     return group_list
-
-def setup_r_grping(g_list):
+#return list of wells within groups (absent the group_name header)
+def group_items(g_list):
     #cleanup lists
     lists = 10
     for index, g in enumerate(g_list):
         # remove empty values
+        #print(index, g) #Testing
         for i in range(len(g)):
             if g.count('') > 0:
                 del g[g.index('')]
         if len(g) <= 1:
-            del g[g.index(g[0])]
+            #print( '*'+str(g) )
+            #del g[g.index(g[0])]
+            #print('*DELETE')
             lists -= 1
     g_list = g_list[:lists]
     group_list = [g_list[x][0] for x in range(0, len(g_list))]
@@ -198,12 +256,18 @@ def setup_r_grping(g_list):
     for index, ls in enumerate(g_list):
         group_list[index] = ls[0]
         g_list[index] = ls[1:]
+    return g_list
+#setup list used to create R grouping file
+def setup_r_grping(g_list):
+    group_list = group_names(g_list)
+    g_list = group_items(g_list)
     #setup dataframes for use in R
+    dataframe = 'dat1$'
     for grp_index, g in enumerate(g_list):
-        group_list[grp_index] += ' <- data.frame('
+        group_list[grp_index] += ' <- data.frame('+dataframe+'Time, '
     for grp_index, g in enumerate(g_list):
         for ls_item in g:
-            group_list[grp_index] += ls_item+', '
+            group_list[grp_index] += dataframe+ls_item+', '
         group_list[grp_index] = group_list[grp_index][:len(group_list[grp_index])-2] +")"
     return group_list
 
@@ -233,6 +297,8 @@ def exec_script(command, script_name, arg_list):
     cmd = [command, path2script] + arg_list
     print(cmd, "Finished")
     return cmd
+
+#relies on result of exec_script
 def exec_script2(command, script_name, arg_list):
     cmd = exec_script(command, script_name, arg_list)
     #check_output will run command and store to result
@@ -240,7 +306,7 @@ def exec_script2(command, script_name, arg_list):
     return x
 ##########|Misc|#################
 
-#return an empty list of lists of size variable size
+#return an empty list of lists of variable size
 def list_n(size_of_list):
     ls = [[] for i in range(size_of_list)]
     return ls

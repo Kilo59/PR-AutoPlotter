@@ -279,9 +279,13 @@ else:
     print('**proceeding with Script**')
 
 ##########Get Raw Data-set from Bioscreen CSV file############################
+if dataIO.check_file_silent(input_csv) == True:
+	original_csv_list_of_lists = dataIO.csv_list_of_lists(input_csv) #store data-set by columns as a list of lists
+else:
+	dataIO.check_file(input_csv)
+	quit()
 number_of_rows_csv = dataIO.count_rows_CSV(input_csv)
 number_of_cols_csv = dataIO.count_columns_CSV(input_csv)
-original_csv_list_of_lists = dataIO.csv_list_of_lists(input_csv) #store data-set by columns as a list of lists
 ##############################################################################
 
 #####|Google Sheet Setup|#####
@@ -411,7 +415,6 @@ if type(wks2) is gspread.models.Worksheet:
         print("****Error: Move 'well_labels' worksheet to index 0 ")
         full_sheet_update = False
 #if 2nd worksheet(@index=1) doesn't exist, create it
-#####****************************************>>>>>>>>>CHANGE TO ROWS/COLS OF UPDATED CSV
 number_of_cols = len(updated_lists)
 if g_sheet.get_worksheet(2) == None:
     g_sheet.add_worksheet('well_data', number_of_rows_csv, 201)
@@ -420,19 +423,23 @@ if g_sheet.get_worksheet(2) == None:
 well_data = g_sheet.worksheet('well_data')
 well_grouping = g_sheet.worksheet('well_grouping')
 
-####|Grouping Begin|##
+####|Grouping Begin|##<
 if generate_r_grping_file == True:
-    group_names = dataIO.group_names(get_grouping_data())
+    g_list = get_grouping_data()
+    group_names = dataIO.group_names(g_list)
     print('Group names:', group_names)
-    dataIO.write_r_grping_file(get_grouping_data())
+    dataIO.write_r_grping_file(g_list)
+    #print(dataIO.group_items(g_list))
+    dataIO.write_ggploter('grouping.R', g_list)
     print('***|grouping.R UPDATED|***')
 
 ########|R subprocess|########<
 #TODO: handle case where generate_r_grping_file = False but Rub = True
 if Rsub == True:
-    dataIO.exec_script('Rscript', 'plot_data.R', group_names)
+    print('****|Rscript plot_data.R EXECUTING|****')
+    dataIO.exec_script2('Rscript', 'plot_data.R', group_names)
 ##############################>
-####|Grouping End|##
+####|Grouping End|##>
 
 ##########TO DO: Handle error that occurs when well_data sheet has less than 201 columns
 if full_sheet_update == True:
