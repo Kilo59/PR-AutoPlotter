@@ -6,12 +6,12 @@ A data analytics platform to automate the computation of data stored locally and
 Allows for users with minimal to no knowledge of programming to import large raw csv datasets, automate computations, analysis, visualizations, add their own specialized computational functions and share their results.
 
 ###Index
-* [Example]()
-* [Installation]()
- * [Scheduler]()
- * [Spread Sheet]()
- * [plotly]()
-* [Configuration Settings]()
+* [Example](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#example)
+* [Installation](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#installation)
+ * [Scheduler](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#setup-task-schedulercron-job-optional)
+ * [Spread Sheet](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#spread-sheet-setup)
+ * [plotly](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#plotly-setup)
+* [Configuration Settings](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#configuration-settings)
 
 ##Example
 ####Input data:
