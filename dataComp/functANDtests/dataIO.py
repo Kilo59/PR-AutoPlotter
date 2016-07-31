@@ -16,20 +16,20 @@ def get_tolerance(req_name):
     tolerance = parser.getfloat('tolerance', req_name)
     return tolerance
 
-def get_start_cond_bol(condition_name):
-    condition = parser.getboolean('start_conditions', condition_name)
-    return condition
-#causing error when run from commandline
 def get_start_cond(condition_name):
     condition = parser.get('start_conditions', condition_name)
-    if  condition.lower() == 'true' or condition.lower() == 'false' or condition == '1' or condition == '0':
+    try:
         condition = parser.getboolean('start_conditions', condition_name)
-        return condition
-    else:
-        return condition
+    except ValueError:
+        pass
+    return condition
 
 def get_R_options(r_option_name):
-    r_option = parser.getboolean('r_options', r_option_name)
+    r_option = parser.get('r_options', r_option_name)
+    try:
+        r_option = parser.getboolean('r_options', r_option_name)
+    except ValueError:
+        pass
     return r_option
 
 ###CSV info gathering
@@ -178,7 +178,6 @@ def doubleCol_CSV(filename, header_list, list_of_columns):
     return
 
 #####|Misc file output|#####
-#TODO write functions to write to file line by line
 #writes string to file
 def write_line_a(filename, string):
     with open(filename, 'a') as f:
@@ -193,7 +192,7 @@ def setup_ggploter(list_of_items_to_plot):
     list_of_plots = group_names(list_of_items_to_plot)
     list_of_items = group_items(list_of_items_to_plot)
     ls_of_strings = []
-    color = ['black', 'red', 'blue', 'orange', 'green']
+    color = ['black', 'red', 'blue', 'orange', 'green', 'darkorchid1', 'aquamarine', 'azure', 'darkgoldenrod', 'firebrick', 'grey']
     plot_list_str = 'plot_list <-c('
     for group_index, group in enumerate(list_of_plots):
         string1 = 'g'+str(group_index+1)+' <- ggplot()+'
@@ -207,7 +206,7 @@ def setup_ggploter(list_of_items_to_plot):
         string_labs='labs(title = \''+str(group)+'\', x= \'Time\', y = \'Optical Density\') +'
         ls_of_strings.append(string_labs)
         #setup ggplot theme() function
-        string_theme='theme( axis.text.x= element_text(angle = 80, size = 7, vjust = 0.5) )\n'
+        string_theme='theme( axis.text.x= element_text(angle = 80, size = 7, vjust = 0.7) )\n'
         ls_of_strings.append(string_theme)
         #setup image_name variable *needed for ggsave()
         str_image_name='image_name <- paste(\''+str(group)+'\', \'.png\', sep = \'\')'
@@ -215,12 +214,31 @@ def setup_ggploter(list_of_items_to_plot):
         #setup ggplot ggsave() function
         string_ggsave='ggsave(image_name, width = 22, height = 8)\n'
         ls_of_strings.append(string_ggsave)
+    #####Plotly#####
     #setup plot_list section label
-    pl_ls_label = '####plot_list vector####'
-    ls_of_strings.append(pl_ls_label)
+    pl_ls_label = '####plotly####'
+    #setup plotly env
+    str_plotly_env1 = '#Sys.setenv(\"plotly_username\" = \"'+get_R_options('plotly_username')+'\")'
+    str_plotly_env2 = '#Sys.setenv(\"plotly_username\" = \"'+get_R_options('plotly_api_key')+'\")'
     #setup plot_list vector
     plot_list_str = plot_list_str[:len(plot_list_str)-2]+')'
+    #setup loop for posting to plotly
+    str_plotly_loop = ('#for (plot in plot_list)\n'
+                       '#{\n'
+                       '#\tplotly_POST( eval(as.name(plot)), plot )\n'
+                       '#}')
+    #if True remove '#' to make code functional
+    if get_R_options('post2plotly') == True:
+        str_plotly_env1 = str_plotly_env1[1:]
+        str_plotly_env2 = str_plotly_env2[1:]
+        for char in '#':
+            str_plotly_loop = str_plotly_loop.replace(char, '')
+    #append strings after alterations
+    ls_of_strings.append(pl_ls_label)
+    ls_of_strings.append(str_plotly_env1)
+    ls_of_strings.append(str_plotly_env2)
     ls_of_strings.append(plot_list_str)
+    ls_of_strings.append(str_plotly_loop)
     return ls_of_strings
 def write_ggploter(filename, list_of_items_to_plot):
     write_line_a(filename, '\n\n####ggplots####')

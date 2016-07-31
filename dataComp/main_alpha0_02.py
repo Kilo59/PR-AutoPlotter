@@ -1,3 +1,4 @@
+#TODO is plate_reader.csv created at end of cycle or begining?
 import gspread
 from functANDtests import dataIO
 from functANDtests import dataCowboy
@@ -247,7 +248,7 @@ print("dataWrangle1.py")
 print("############|START|##########")
 full_print = True
 #TODO: fix config parser error that occurs when run from the command line, due to path not being explicitly set?
-full_sheet_update = dataIO.get_start_cond_bol('post2google')
+full_sheet_update = dataIO.get_start_cond('post2google')
 input_csv = dataIO.get_start_cond('input_filename') #full filename of CSV file stored in working directory
 print('Input filename: ', input_csv)
 Rsub = dataIO.get_R_options("execute_r")
@@ -268,9 +269,6 @@ print("Group Data: ", grouping)
 print("Generate grouping.R file: ", generate_r_grping_file)
 print("Update Google Sheet: ", full_sheet_update)
 start = dataIO.get_start_cond('run')
-#*******TESTING******************TESTING**************#
-
-#******************END TESTING************************#
 if start == False:
     print("**config.txt has \'run\' set to \'False\'**")
     print("***STOPPING PROGRAM***")
@@ -448,6 +446,7 @@ if full_sheet_update == True:
 else:
     print("*Set \'post2google = True\' to upload data to the Google Spreadsheet*")
 #######| END |########
+#TODO Set run = False
 end_time = RunTime.currentTime()#start-time
 run_time = RunTime.calc_runTime(start_time, end_time)
 print("############|END|##########")
