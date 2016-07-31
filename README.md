@@ -21,9 +21,9 @@ Allows for users with minimal to no knowledge of programming to import large raw
 
 ![CSVexample]()
 
-![labelEx]()
+![labelEx](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/readme_images/labelEx1.PNG?raw=true)
 
-![groupingEx]()
+![groupingEx](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/readme_images/groupingEx1_sm.png?raw=true)
 
 ####Output:
  * Updated Google Spreadsheet
@@ -32,17 +32,17 @@ Allows for users with minimal to no knowledge of programming to import large raw
  * dynamically generated R script
  * ggplot png files
 
-![Updated Google Spreadsheet]()
+![Updated Google Spreadsheet](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/readme_images/well_dataEx1.PNG?raw=true)
 
-![PlotlyEx]()
+![PlotlyEx](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/readme_images/plotlyEx1.PNG?raw=true)
 
-![RscriptEx]()
+![RscriptEx](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/readme_images/groupingRex1.PNG?raw=true)
 
-![local_fileEx]()
+![local_fileEx](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/readme_images/local_filesEx1.PNG?raw=true)
 
 ###Plate-reader Wells
 ####[Well Label-Replacement Sheet](https://docs.google.com/spreadsheets/d/1fJhE1hOMqVvf5T8YHxRATOQ8QHKfujZRym2wk-tYq4I/pubhtml)
-![Well Guide](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/Microplate_simple.PNG?raw=true)
+![Well Guide](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/readme_images/Microplate_simple.PNG?raw=true)
 
 ##Installation
 * [Obtain OAuth2 credentials from Google Developers Console](http://gspread.readthedocs.io/en/latest/oauth2.html) (Steps 1-4)
