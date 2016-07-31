@@ -12,6 +12,7 @@ from configparser import SafeConfigParser
 parser = SafeConfigParser()
 parser.read('config.ini')
 #TODO fix errors when run from commandline
+#TODO consilidate into single class
 def get_tolerance(req_name):
     tolerance = parser.getfloat('tolerance', req_name)
     return tolerance
@@ -20,6 +21,14 @@ def get_start_cond(condition_name):
     condition = parser.get('start_conditions', condition_name)
     try:
         condition = parser.getboolean('start_conditions', condition_name)
+    except ValueError: #value is not a boolean
+        pass
+    return condition
+
+def get_sheet_cond(condition_name):
+    condition = parser.get('spread_sheet', condition_name)
+    try:
+        condition = parser.getboolean('spread_sheet', condition_name)
     except ValueError: #value is not a boolean
         pass
     return condition

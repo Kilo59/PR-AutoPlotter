@@ -288,7 +288,7 @@ number_of_cols_csv = dataIO.count_columns_CSV(input_csv)
 
 #####|Google Sheet Setup|#####
 #Working Sheet Name
-google_sheet_name = 'plate_wells'
+google_sheet_name = dataIO.get_sheet_cond('spread_sheet_name')
 #Setup GoogleApp Authrization/Credentials
 auth_filename = 'Authorization.json'
 scope = ['https://spreadsheets.google.com/feeds']
