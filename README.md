@@ -19,7 +19,7 @@ Allows for users with minimal to no knowledge of programming to import large raw
 * Well names
 * Well groupings
 
-![CSVexample]()
+![CSVexample](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/readme_images/csv.png)
 
 ![labelEx](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/readme_images/labelEx1.PNG?raw=true)
 
