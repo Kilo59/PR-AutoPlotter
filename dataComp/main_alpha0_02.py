@@ -446,7 +446,9 @@ if full_sheet_update == True:
 else:
     print("*Set \'post2google = True\' to upload data to the Google Spreadsheet*")
 #######| END |########
-#TODO Set run = False
+##After succesful execution of script set run = False
+##to prevent script from executing repeatidly
+dataIO.change_config('start_conditions', 'run', 'False')
 end_time = RunTime.currentTime()#start-time
 run_time = RunTime.calc_runTime(start_time, end_time)
 print("############|END|##########")
