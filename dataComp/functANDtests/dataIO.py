@@ -1,4 +1,4 @@
-#dataIO
+#dataIO.py
 from functANDtests import RunTime
 #import RunTime #when running tests in functANDtests folder
 import csv
@@ -10,7 +10,7 @@ from configparser import SafeConfigParser
 
 ###reading from Config file
 parser = SafeConfigParser()
-parser.read('config.txt')
+parser.read('config.ini')
 #TODO fix errors when run from commandline
 def get_tolerance(req_name):
     tolerance = parser.getfloat('tolerance', req_name)
@@ -20,7 +20,7 @@ def get_start_cond(condition_name):
     condition = parser.get('start_conditions', condition_name)
     try:
         condition = parser.getboolean('start_conditions', condition_name)
-    except ValueError:
+    except ValueError: #value is not a boolean
         pass
     return condition
 
@@ -28,10 +28,29 @@ def get_R_options(r_option_name):
     r_option = parser.get('r_options', r_option_name)
     try:
         r_option = parser.getboolean('r_options', r_option_name)
-    except ValueError:
+    except ValueError: #value is not a boolean
         pass
     return r_option
-
+###read & modif config
+def set_config():
+    parser['start_conditions'] = {'run' : get_start_cond('run'),
+                                  'post2google' : get_start_cond('post2google'),
+                                  'input_filename' : get_start_cond('input_filename')}
+    parser['tolerance'] = {'rangeReq' : get_tolerance('rangeReq'),
+                           'maxReq' : get_tolerance('maxReq')}
+    parser['r_options'] = {'execute_r' : get_R_options('execute_r'),
+                           'gen_grping_file' : get_R_options('gen_grping_file'),
+                           'post2plotly' : get_R_options('post2plotly'),
+                           'plotly_username' : get_R_options('plotly_username'),
+                           'plotly_api_key' : get_R_options('plotly_api_key')}
+    return
+def change_config(level, option, value):
+    set_config()
+    config_mutate = parser[level]
+    config_mutate[option] = value
+    with open('config.ini', 'w') as configfile:
+        parser.write(configfile)
+    return
 ###CSV info gathering
 
 #modified from jamylak @StackOverflow
@@ -240,6 +259,7 @@ def setup_ggploter(list_of_items_to_plot):
     ls_of_strings.append(plot_list_str)
     ls_of_strings.append(str_plotly_loop)
     return ls_of_strings
+
 def write_ggploter(filename, list_of_items_to_plot):
     write_line_a(filename, '\n\n####ggplots####')
     ls_of_strings = setup_ggploter(list_of_items_to_plot)
