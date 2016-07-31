@@ -3,7 +3,7 @@ Automated Data Analyzer: Python-Google Spreadsheet-R pipeline
 ##What is this?
 A data analytics platform to automate the computation of data stored locally and in Google Cloud Applications and output to the web for remote access.  
 
-Allows for users with minimal to no knowledge of programming to import large raw csv datasets, automate computations, analysis, visualizations, add their own specialized computational functions and share their results. 
+Allows for users with minimal to no knowledge of programming to import large raw csv datasets, automate computations, analysis, visualizations, add their own specialized computational functions and share their results.
 
 ###Index
 * [Example]()
@@ -14,7 +14,7 @@ Allows for users with minimal to no knowledge of programming to import large raw
 * [Configuration Settings]()
 
 ##Example
-####Input data: 
+####Input data:
 * BioscreenC derived .CSV file
 * Well names
 * Well groupings
@@ -25,9 +25,9 @@ Allows for users with minimal to no knowledge of programming to import large raw
 
 ![groupingEx]()
 
-####Output: 
- * Updated Google Spreadsheet 
- * [Plotly ggplots](https://dashboards.ly/ua-3iqBAQDFa93xVVHraRB3Tm "Plotly Dashboard") 
+####Output:
+ * Updated Google Spreadsheet
+ * [Plotly ggplots](https://dashboards.ly/ua-3iqBAQDFa93xVVHraRB3Tm "Plotly Dashboard")
  * updated CSV file
  * dynamically generated R script
  * ggplot png files
@@ -44,7 +44,7 @@ Allows for users with minimal to no knowledge of programming to import large raw
 ####[Well Label-Replacement Sheet](https://docs.google.com/spreadsheets/d/1fJhE1hOMqVvf5T8YHxRATOQ8QHKfujZRym2wk-tYq4I/pubhtml)
 ![Well Guide](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/Microplate_simple.PNG?raw=true)
 
-##Installation 
+##Installation
 * [Obtain OAuth2 credentials from Google Developers Console](http://gspread.readthedocs.io/en/latest/oauth2.html) (Steps 1-4)
 * Setup Google Spreadsheet
 * Download Zipfile
@@ -52,7 +52,7 @@ Allows for users with minimal to no knowledge of programming to import large raw
   * Check config.ini preferences
     * Set google spreadsheet name
     * Set [plotly credentials (username and api key)](https://plot.ly/)
-    * Set desired preferences, tolerances 
+    * Set desired preferences, tolerances
 * [Install & Add to PATH R](https://cran.r-project.org/mirrors.html)
 * [Install & Add to PATH Python35](https://www.python.org/ftp/python/3.5.2/python-3.5.2.exe)
   * Install python modules gspread & oauth2client
@@ -62,7 +62,7 @@ Allows for users with minimal to no knowledge of programming to import large raw
 2. python -m pip install gspread
 3. python -m pip install oauth2client
 
-####Setup Task Scheduler/Cron job (optional) 
+####Setup Task Scheduler/Cron job (optional)
 
 ####Spread Sheet Setup
 

@@ -1,7 +1,7 @@
 #install.packages("plotly")
 library(plotly)
-Sys.setenv("plotly_username"= " ") #add plotly account username 
-Sys.setenv("plotly_api_key"= " ") #add plotly accound api key
+#Sys.setenv("plotly_username"= " ") #add plotly account username
+#Sys.setenv("plotly_api_key"= " ") #add plotly accound api key
 # Fetch command line arguments
 myArgs <- commandArgs(trailingOnly = TRUE)
 #write to stdout stream
@@ -30,4 +30,3 @@ for (plot in plot_list)
 #    y_max <- max(dat1[[i]])
 #  }
 #}
-
