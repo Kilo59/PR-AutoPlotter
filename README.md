@@ -16,12 +16,12 @@ Tested and Optimized for the BioscreenC 20 x 10 microplate reader
 * [oauth2client](https://github.com/google/oauth2client) | Python library for accessing resources protected by OAuth 2.0
 
 ###Index
-* [Example](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#example)
-* [Installation](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#installation)
- * [Scheduler](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#setup-task-schedulercron-job-optional)
- * [Spreadsheet](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#spread-sheet-setup)
- * [plotly](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#plotly-setup)
-* [Configuration Settings](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#configuration-settings)
+* [Example](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#example)
+* [Installation](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#installation)
+ * [Scheduler](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#setup-task-schedulercron-job-optional)
+ * [Spreadsheet](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#spread-sheet-setup)
+ * [plotly](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#plotly-setup)
+* [Configuration Settings](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#configuration-settings)
 
 ##Example
 ####Input data:
@@ -29,11 +29,11 @@ Tested and Optimized for the BioscreenC 20 x 10 microplate reader
 * Well names
 * Well groupings
 
-![CSVexample](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/readme_images/csv.png)
+![CSVexample](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/csv.png)
 
-![labelEx](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/readme_images/labelEx1.PNG?raw=true)
+![labelEx](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/labelEx1.PNG?raw=true)
 
-![groupingEx](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/readme_images/groupingEx1_sm.png?raw=true)
+![groupingEx](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/groupingEx1_sm.png?raw=true)
 
 ####Output:
  * Updated Google Spreadsheet
@@ -42,17 +42,17 @@ Tested and Optimized for the BioscreenC 20 x 10 microplate reader
  * dynamically generated R script
  * ggplot png files
 
-![Updated Google Spreadsheet](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/readme_images/well_dataEx1.PNG?raw=true)
+![Updated Google Spreadsheet](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/well_dataEx1.PNG?raw=true)
 
-![PlotlyEx](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/readme_images/plotlyEx1.PNG?raw=true)
+![PlotlyEx](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/plotlyEx1.PNG?raw=true)
 
-![RscriptEx](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/readme_images/groupingRex1.PNG?raw=true)
+![RscriptEx](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/groupingRex1.PNG?raw=true)
 
-![local_fileEx](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/readme_images/local_filesEx1.PNG?raw=true)
+![local_fileEx](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/local_filesEx1.PNG?raw=true)
 
 ###Plate-reader Wells
 ####[Well Label-Replacement Sheet](https://docs.google.com/spreadsheets/d/1fJhE1hOMqVvf5T8YHxRATOQ8QHKfujZRym2wk-tYq4I/pubhtml)
-![Well Guide](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/readme_images/Microplate_simple.PNG?raw=true)
+![Well Guide](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/Microplate_simple.PNG?raw=true)
 
 ##Installation
 * [Obtain OAuth2 credentials from Google Developers Console](http://gspread.readthedocs.io/en/latest/oauth2.html) (Steps 1-4)
