@@ -49,10 +49,6 @@ post2plotly | True/False | If set to False the script for looping through the Da
 plotly_api_key | Text String | Replace with your plotly api key. Available with every plotly account. Not needed if post2plotly = false.
 plotly_username | Text String | Replace with your plotly username. Not needed if post2plotly = false.
 
-###Plate-reader Wells
-####[Well Label-Replacement Sheet](https://docs.google.com/spreadsheets/d/1fJhE1hOMqVvf5T8YHxRATOQ8QHKfujZRym2wk-tYq4I/pubhtml)
-![Well Guide](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/Microplate_simple.PNG?raw=true)
-
 ##Installation
 * [Obtain OAuth2 credentials from Google Developers Console](http://gspread.readthedocs.io/en/latest/oauth2.html) (Steps 1-4)
 * Setup Google Spreadsheet
