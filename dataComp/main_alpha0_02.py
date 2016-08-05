@@ -384,14 +384,11 @@ if full_print == True and Remove_invalid_data == True:
     print( exclude_list[int(len(exclude_list)/2):])
 ###|Create updated CSV file|###
 dataIO.multiCol_CSV('updated_plate_reader.csv', updated_lists)
-###|Create grouping.R file|###
-if generate_r_grping_file == True:
-    pass
 ####################################>
 
 #######################################################
 
-#####Update Spreadsheet#####
+#####Prepare Spreadsheet Update#####
 #check if there is a "well_grouping" worksheet at index 1
 wks1 = g_sheet.get_worksheet(1)
 if type(wks1) is gspread.models.Worksheet:
@@ -439,6 +436,7 @@ if Rsub == True:
 ##############################>
 ####|Grouping End|##>
 
+#####|Post OD readings to Spreadsheet|#####
 ##########TO DO: Handle error that occurs when well_data sheet has less than 201 columns
 if full_sheet_update == True:
     gsheet_update(updated_lists, number_of_cols)
