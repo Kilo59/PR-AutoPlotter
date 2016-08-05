@@ -1,4 +1,4 @@
-# BioscreenC Data Assistant
+# Microplate reader Assistant
 Python-Google Spreadsheet-R Data pipeline
 
 Documentation: WIP
@@ -6,7 +6,14 @@ Documentation: WIP
 ##What is this?
 A platform to automate the computation/analysis of data from a microplate reader.  
 
-Allows for users with minimal to no knowledge of programming to import large raw csv datasets, automate computations, analysis, visualizations, add their own specialized computational functions. Users can access these results remotely minutes after the plate reader has finsished taking it's final measurements. 
+Allows for users with minimal to no knowledge of programming to import large raw csv datasets, automate computations, analysis, visualizations, add their own specialized computational functions (in R or Python). Users can access these results remotely minutes after the plate reader has finsished taking it's final measurements. 
+Remotely accessable via Google Spreadsheets and plotly 
+
+Tested and Optimized for the BioscreenC 20 x 10 microplate reader
+
+##Dependencies
+* [gspread](https://github.com/burnash/gspread) | Google Spreadsheets Python API
+* [oauth2client](https://github.com/google/oauth2client) | Python library for accessing resources protected by OAuth 2.0
 
 ###Index
 * [Example](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#example)
