@@ -6,8 +6,8 @@ Documentation: WIP
 ##What is this?
 A platform to automate the computation/analysis of data from a microplate reader.  
 
-Allows for users with minimal to no knowledge of programming to import large raw csv datasets, automate computations, analysis, visualizations, add their own specialized computational functions (in R or Python). Users can access these results remotely minutes after the plate reader has finsished taking it's final measurements. 
-Remotely accessable via Google Spreadsheets and plotly 
+Allows for users with minimal to no knowledge of programming to import large raw csv datasets, automate computations, analysis, visualizations, add their own specialized computational functions (in R or Python). Users can access these results remotely minutes after the plate reader has finished taking it's final measurements. 
+Remotely accessible via Google Spreadsheets and plotly 
 
 Tested and Optimized for the BioscreenC 20 x 10 microplate reader
 
@@ -79,3 +79,8 @@ Tested and Optimized for the BioscreenC 20 x 10 microplate reader
 ####Plotly Setup
 
 ##Configuration Settings
+start_condition | Type | Meaning
+--- | --- | ---
+post2google | True/False | Determines whether or not the validated OD readings are posted to the google spreadsheet at the end of the Python script. If not needed or the readings have already been posted, set condition to False for significantly shorter run time.
+input_filename | Text String | Program will look for a file of this name. Make sure the CSV filename matches this otherwise the program will exit prematurely. 
+run | True/False | Program will exit immediately unless True. After the main script has been executed completely without errors this will be changed to False to prevent the task/process scheduler from executing this script repeatedly. *Make sure this is set to True before leaving the Lab.
