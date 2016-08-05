@@ -16,67 +16,12 @@ Tested and Optimized for the BioscreenC 20 x 10 microplate reader
 * [oauth2client](https://github.com/google/oauth2client) | Python library for accessing resources protected by OAuth 2.0
 
 ###Index
-* [Example](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#example)
-* [Installation](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#installation)
- * [Scheduler](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#setup-task-schedulercron-job-optional)
- * [Spreadsheet](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#spread-sheet-setup)
- * [plotly](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#plotly-setup)
-* [Configuration Settings](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#configuration-settings)
-
-##Example
-####Input data:
-* BioscreenC derived .CSV file
-* Well names
-* Well groupings
-
-![CSVexample](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/csv.png)
-
-![labelEx](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/labelEx1.PNG?raw=true)
-
-![groupingEx](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/groupingEx1_sm.png?raw=true)
-
-####Output:
- * Updated Google Spreadsheet
- * [Plotly ggplots](https://dashboards.ly/ua-3iqBAQDFa93xVVHraRB3Tm "Plotly Dashboard")
- * updated CSV file
- * dynamically generated R script
- * ggplot png files
-
-![Updated Google Spreadsheet](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/well_dataEx1.PNG?raw=true)
-
-![PlotlyEx](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/plotlyEx1.PNG?raw=true)
-
-![RscriptEx](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/groupingRex1.PNG?raw=true)
-
-![local_fileEx](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/local_filesEx1.PNG?raw=true)
-
-###Plate-reader Wells
-####[Well Label-Replacement Sheet](https://docs.google.com/spreadsheets/d/1fJhE1hOMqVvf5T8YHxRATOQ8QHKfujZRym2wk-tYq4I/pubhtml)
-![Well Guide](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/Microplate_simple.PNG?raw=true)
-
-##Installation
-* [Obtain OAuth2 credentials from Google Developers Console](http://gspread.readthedocs.io/en/latest/oauth2.html) (Steps 1-4)
-* Setup Google Spreadsheet
-* Download Zipfile
-  * Place JSON authorization file in the same directory as main.py
-  * Check config.ini preferences
-    * Set google spreadsheet name
-    * Set [plotly credentials (username and api key)](https://plot.ly/)
-    * Set desired preferences, tolerances
-* [Install & Add to PATH R](https://cran.r-project.org/mirrors.html)
-* [Install & Add to PATH Python35](https://www.python.org/ftp/python/3.5.2/python-3.5.2.exe)
-  * Install python modules gspread & oauth2client
-
-####To Install python modules on Windows:
-1. Run commandprompt
-2. python -m pip install gspread
-3. python -m pip install oauth2client
-
-####Setup Task Scheduler/Cron job (optional)
-
-####Spreadsheet Setup
-
-####Plotly Setup
+* [Configuration Settings]
+* [Installation]
+ * [Scheduler]
+ * [Spreadsheet]
+ * [plotly]
+* [Example]
 
 ##Configuration Settings
 start_condition | Type | Meaning
@@ -104,3 +49,53 @@ post2plotly | True/False | If set to False the script for looping through the Da
 plotly_api_key | Text String | Replace with your plotly api key. Available with every plotly account. Not needed if post2plotly = false.
 plotly_username | Text String | Replace with your plotly username. Not needed if post2plotly = false.
 
+##Installation
+* [Obtain OAuth2 credentials from Google Developers Console](http://gspread.readthedocs.io/en/latest/oauth2.html) (Steps 1-4)
+* Setup Google Spreadsheet
+* Download Zipfile
+  * Place JSON authorization file in the same directory as main.py
+  * Check config.ini preferences
+    * Set google spreadsheet name
+    * Set [plotly credentials (username and api key)](https://plot.ly/)
+    * Set desired preferences, tolerances
+* [Install & Add to PATH R](https://cran.r-project.org/mirrors.html)
+* [Install & Add to PATH Python35](https://www.python.org/ftp/python/3.5.2/python-3.5.2.exe)
+  * Install python modules gspread & oauth2client
+
+####To Install python modules on Windows:
+1. Run commandprompt
+2. python -m pip install gspread
+3. python -m pip install oauth2client
+
+####Setup Task Scheduler/Cron job (optional)
+
+####Spreadsheet Setup
+
+####Plotly Setup
+
+##Example
+####Input data:
+* BioscreenC derived .CSV file
+* Well names
+* Well groupings
+
+![CSVexample](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/csv.png)
+
+![labelEx](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/labelEx1.PNG?raw=true)
+
+![groupingEx](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/groupingEx1_sm.png?raw=true)
+
+####Output:
+ * Updated Google Spreadsheet
+ * [Plotly ggplots](https://dashboards.ly/ua-3iqBAQDFa93xVVHraRB3Tm "Plotly Dashboard")
+ * updated CSV file
+ * dynamically generated R script
+ * ggplot png files
+
+![Updated Google Spreadsheet](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/well_dataEx1.PNG?raw=true)
+
+![PlotlyEx](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/plotlyEx1.PNG?raw=true)
+
+![RscriptEx](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/groupingRex1.PNG?raw=true)
+
+![local_fileEx](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/readme_images/local_filesEx1.PNG?raw=true)
