@@ -84,3 +84,23 @@ start_condition | Type | Meaning
 post2google | True/False | Determines whether or not the validated OD readings are posted to the google spreadsheet at the end of the Python script. If not needed or the readings have already been posted, set condition to False for significantly shorter run time.
 input_filename | Text String | Program will look for a file of this name. Make sure the CSV filename matches this otherwise the program will exit prematurely. 
 run | True/False | Program will exit immediately unless True. After the main script has been executed completely without errors this will be changed to False to prevent the task/process scheduler from executing this script repeatedly. *Make sure this is set to True before leaving the Lab.
+
+tolerance | Type | Meaning
+--- | --- | ---
+maxreq | Float | The maximum value for the well must exceed this number to pass validation
+ramgereq | Float | The range for the well must exceed this number to pass validation
+
+####Default Tolerance settings are meant to exclude empty wells. Wells will pass the validation check if they meet either of these requirements. Make use of the Well Grouping feature to subset the data more narrowly.  
+
+spread_sheet | Type | Meaning
+---- | ---- | ----
+sheet_name | Text String | gspread will accesses your google spreadsheet using this name. Make sure this matches the Spreadsheet you want to use, not the Worksheet title.
+
+r_options | Type | Meaning
+---- | ---- | ----
+execute_r | True/False | Determines whether or not the program will execute the plot_data.R sub process. 
+gen_grping_file | True/False | Determines whether of not an Rscript will be generated based on the Well Groupings set in the Google Spreadsheet. If execute_r = Flase and gen_grping_file = True, the grouping.R script for creation of ggplots will be created but the ggplot images themselves will not be automatically created or posted to plotly.
+post2plotly | True/False | If set to False the script for looping through the Data Groups and posting to your plotly account will still be generated but they will be commented out. To execute the loop at a later time remove the '#' and execute in R. To post results to plotly automatically post2ploty = True, the correct api key and username must be set and execute_r = True.
+plotly_api_key | Text String | Replace with your plotly api key. Available with every plotly account. Not needed if post2plotly = false.
+plotly_username | Text String | Replace with your plotly username. Not needed if post2plotly = false.
+
