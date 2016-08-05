@@ -1,5 +1,8 @@
 # BioscreenC Data Assistant
-Automated Data Analyzer: Python-Google Spreadsheet-R pipeline
+Python-Google Spreadsheet-R Data pipeline
+
+Documentation: WIP
+
 ##What is this?
 A data analytics platform to automate the computation of data stored locally and in Google Cloud Applications and output to the web for remote access.  
 
@@ -9,7 +12,7 @@ Allows for users with minimal to no knowledge of programming to import large raw
 * [Example](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#example)
 * [Installation](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#installation)
  * [Scheduler](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#setup-task-schedulercron-job-optional)
- * [Spread Sheet](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#spread-sheet-setup)
+ * [Spreadsheet](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#spread-sheet-setup)
  * [plotly](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#plotly-setup)
 * [Configuration Settings](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#configuration-settings)
 
@@ -64,7 +67,7 @@ Allows for users with minimal to no knowledge of programming to import large raw
 
 ####Setup Task Scheduler/Cron job (optional)
 
-####Spread Sheet Setup
+####Spreadsheet Setup
 
 ####Plotly Setup
 
