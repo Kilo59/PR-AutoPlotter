@@ -4,9 +4,9 @@ Python-Google Spreadsheet-R Data pipeline
 Documentation: WIP
 
 ##What is this?
-A data analytics platform to automate the computation of data stored locally and in Google Cloud Applications and output to the web for remote access.  
+A platform to automate the computation/analysis of data from a microplate reader.  
 
-Allows for users with minimal to no knowledge of programming to import large raw csv datasets, automate computations, analysis, visualizations, add their own specialized computational functions and share their results.
+Allows for users with minimal to no knowledge of programming to import large raw csv datasets, automate computations, analysis, visualizations, add their own specialized computational functions. Users can access these results remotely minutes after the plate reader has finsished taking it's final measurements. 
 
 ###Index
 * [Example](https://github.com/SpaceTuna8/data-alpha-Guilf/blob/master/README.md#example)
