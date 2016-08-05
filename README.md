@@ -16,12 +16,12 @@ Tested and Optimized for the BioscreenC 20 x 10 microplate reader
 * [oauth2client](https://github.com/google/oauth2client) | Python library for accessing resources protected by OAuth 2.0
 
 ###Index
-* [Configuration Settings](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#configuration-settings)
-* [Installation](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#installation)
- * [Scheduler](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#setup-task-schedulercron-job-optional)
- * [Spreadsheet](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#spread-sheet-setup)
- * [plotly](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#plotly-setup)
-* [Example](https://github.com/kilo59/data-alpha-Guilf/blob/alpha_2/README.md#example)
+* [Configuration Settings]
+* [Installation]
+ * [Scheduler]
+ * [Spreadsheet]
+ * [plotly]
+* [Example]
 
 ##Configuration Settings
 start_condition | Type | Meaning
