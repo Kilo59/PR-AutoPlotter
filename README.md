@@ -69,7 +69,11 @@ plotly_username | Text String | Replace with your plotly username. Not needed if
 
 ####Setup Task Scheduler/Cron job (optional)
 
-####Spreadsheet Setup
+####[Spreadsheet Setup](https://docs.google.com/spreadsheets/d/1iwIqJFmqjBiF7x14Bd4VQg8CFB-6jfWLCbYkezdn5Pw/edit?usp=sharing)
+* Copy Template
+* Set config settings to match spreadsheet name
+* Relabel Wells, Group Names and add items to Groups as needed
+* REARRANGING WORKSHEET ORDER MAY RESULT IN ERROR
 
 ####Plotly Setup
 
