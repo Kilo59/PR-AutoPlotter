@@ -295,7 +295,11 @@ scope = ['https://spreadsheets.google.com/feeds']
 credentials = ServiceAccountCredentials.from_json_keyfile_name(auth_filename, scope)
 gc = gspread.authorize(credentials)
 ##open spreadsheet by 'title'
-g_sheet = gc.open(google_sheet_name)
+try:
+    g_sheet = gc.open(google_sheet_name)
+except:
+    print(Exception)
+    print("**ERROR: Make sure the spreadsheet name in config.ini file matches your google spreadsheet")
 #setup worksheet variables
 well_labels = g_sheet.worksheet('well_labels')
 print("****************************")
