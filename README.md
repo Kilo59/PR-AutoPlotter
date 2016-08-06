@@ -1,7 +1,9 @@
 # Microplate reader Assistant
-Python-Google Spreadsheet-R Data pipeline
+##Python-Google Spreadsheet-R Data pipeline
 
-Documentation: WIP
+Despite limitations Excel remains the most widely used application for data analysis in many fields including Biological research. This software uses a combination of spreadsheets, Python and procedurally generated R code to filter, analyze and visualize data from a Micro-plate reader machine. 
+
+###Documentation: WIP
 
 ##What is this?
 A platform to automate the computation/analysis of data from a microplate reader.  
@@ -70,10 +72,21 @@ plotly_username | Text String | Replace with your plotly username. Not needed if
 ####Setup Task Scheduler/Cron job (optional)
 
 ####Spreadsheet Setup
+* [Copy Template](https://docs.google.com/spreadsheets/d/1iwIqJFmqjBiF7x14Bd4VQg8CFB-6jfWLCbYkezdn5Pw/edit?usp=sharing)
+* Set config settings to match spreadsheet name
+* Relabel Wells, Group Names and add items to Groups as needed
+* Share the spreadsheet with the email from JSON authorization (pending an fix to gspread to resolve issue)  
+* REARRANGING WORKSHEET ORDER MAY RESULT IN ERROR
 
 ####Plotly Setup
 
 ##Example
+An example CSV file has been provided in the 'examples' folder within 'auto_plotter'. To peform a test run; follow these steps after the initial setup. 
+* Move the 'raw_plate_reader.csv' to the same folder as the main script. 
+* Check the cofig settings and modify them where appropriate. Reccomending setting post2google = False for the first few runs.
+* Run the main script from the command line or built in Python IDLE (recommended) 
+* Depending on your config settings and well label names and groups you should notice new ggplot.png files and a grouping.R file being created within the main 'auto_plotter' folder. 
+
 ####Input data:
 * BioscreenC derived .CSV file
 * Well names
