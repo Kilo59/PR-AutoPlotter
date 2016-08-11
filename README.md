@@ -35,7 +35,7 @@ run | True/False | Program will exit immediately unless True. After the main scr
 tolerance | Type | Meaning
 --- | --- | ---
 maxreq | Float | The maximum value for the well must exceed this number to pass validation
-ramgereq | Float | The range for the well must exceed this number to pass validation
+rangereq | Float | The range for the well must exceed this number to pass validation
 
 ####Default Tolerance settings are meant to exclude empty wells. Wells will pass the validation check if they meet either of these requirements. Make use of the Well Grouping feature to subset the data more narrowly.  
 
