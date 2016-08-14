@@ -1,15 +1,15 @@
 # Microplate reader Assistant
 ##Python-Google Spreadsheet-R Data pipeline
 
-Despite limitations Excel remains the most widely used application for data analysis in many fields including Biological research. This software uses a combination of spreadsheets, Python and procedurally generated R code to filter, analyze and visualize data from a Micro-plate reader machine. 
+Despite limitations Excel remains one of the most widely used application for data analysis in many fields. This software uses a combination of spreadsheets, Python and procedurally generated R code to filter, analyze and visualize data from a Micro-plate reader machine.
 
 ###Documentation: WIP
 
 ##What is this?
 A platform to automate the computation/analysis of data from a microplate reader.  
 
-Allows for users with minimal to no knowledge of programming to import large raw csv datasets, automate computations, analysis, visualizations, add their own specialized computational functions (in R or Python). Users can access these results remotely minutes after the plate reader has finished taking it's final measurements. 
-Remotely accessible via Google Spreadsheets and plotly 
+Allows for users with minimal to no knowledge of programming to import large raw csv datasets, automate computations, analysis, visualizations, add their own specialized computational functions (in R or Python). Users can access these results remotely minutes after the plate reader has finished taking it's final measurements.
+Remotely accessible via Google Spreadsheets and plotly
 
 Tested and Optimized for the BioscreenC 20 x 10 microplate reader
 
@@ -29,13 +29,13 @@ Tested and Optimized for the BioscreenC 20 x 10 microplate reader
 start_condition | Type | Meaning
 --- | --- | ---
 post2google | True/False | Determines whether or not the validated OD readings are posted to the google spreadsheet at the end of the Python script. If not needed or the readings have already been posted, set condition to False for significantly shorter run time.
-input_filename | Text String | Program will look for a file of this name. Make sure the CSV filename matches this otherwise the program will exit prematurely. 
+input_filename | Text String | Program will look for a file of this name. Make sure the CSV filename matches this otherwise the program will exit prematurely.
 run | True/False | Program will exit immediately unless True. After the main script has been executed completely without errors this will be changed to False to prevent the task/process scheduler from executing this script repeatedly. *Make sure this is set to True before leaving the Lab.
 
 tolerance | Type | Meaning
 --- | --- | ---
 maxreq | Float | The maximum value for the well must exceed this number to pass validation
-ramgereq | Float | The range for the well must exceed this number to pass validation
+rangereq | Float | The range for the well must exceed this number to pass validation
 
 ####Default Tolerance settings are meant to exclude empty wells. Wells will pass the validation check if they meet either of these requirements. Make use of the Well Grouping feature to subset the data more narrowly.  
 
@@ -45,8 +45,8 @@ sheet_name | Text String | gspread will accesses your google spreadsheet using t
 
 r_options | Type | Meaning
 ---- | ---- | ----
-execute_r | True/False | Determines whether or not the program will execute the plot_data.R sub process. 
-gen_grping_file | True/False | Determines whether of not an Rscript will be generated based on the Well Groupings set in the Google Spreadsheet. If execute_r = Flase and gen_grping_file = True, the grouping.R script for creation of ggplots will be created but the ggplot images themselves will not be automatically created or posted to plotly.
+execute_r | True/False | Determines whether the program will execute the plot_data.R sub process.
+gen_grping_file | True/False | Determines whether an Rscript will be generated based on the Well Groupings set in the Google Spreadsheet. If execute_r = Flase and gen_grping_file = True, the grouping.R script for creation of ggplots will be created but the ggplot images themselves will not be automatically created or posted to plotly.
 post2plotly | True/False | If set to False the script for looping through the Data Groups and posting to your plotly account will still be generated but they will be commented out. To execute the loop at a later time remove the '#' and execute in R. To post results to plotly automatically post2ploty = True, the correct api key and username must be set and execute_r = True.
 plotly_api_key | Text String | Replace with your plotly api key. Available with every plotly account. Not needed if post2plotly = false.
 plotly_username | Text String | Replace with your plotly username. Not needed if post2plotly = false.
@@ -81,11 +81,11 @@ plotly_username | Text String | Replace with your plotly username. Not needed if
 ####Plotly Setup
 
 ##Example
-An example CSV file has been provided in the 'examples' folder within 'auto_plotter'. To peform a test run; follow these steps after the initial setup. 
-* Move the 'raw_plate_reader.csv' to the same folder as the main script. 
+An example CSV file has been provided in the 'examples' folder within 'auto_plotter'. To peform a test run; follow these steps after the initial setup.
+* Move the 'raw_plate_reader.csv' to the same folder as the main script.
 * Check the cofig settings and modify them where appropriate. Reccomending setting post2google = False for the first few runs.
-* Run the main script from the command line or built in Python IDLE (recommended) 
-* Depending on your config settings and well label names and groups you should notice new ggplot.png files and a grouping.R file being created within the main 'auto_plotter' folder. 
+* Run the main script from the command line or built in Python IDLE (recommended)
+* Depending on your config settings and well label names and groups you should notice new ggplot.png files and a grouping.R file being created within the main 'auto_plotter' folder.
 
 ####Input data:
 * BioscreenC derived .CSV file
