@@ -12,3 +12,7 @@ dataComp/.Rhistory
 *.Rproj
 dataComp/.Rproj.user/*
 dataComp/3point.csv
+auto_plotter/desktop.ini
+auto_plotter/functANDtests/desktop.ini
+auto_plotter/examples/desktop.ini
+desktop.ini

@@ -1,7 +1,7 @@
 # Microplate reader Assistant
 ##Python-Google Spreadsheet-R Data pipeline
 
-Despite limitations Excel remains the most widely used application for data analysis in many fields including Biological research. This software uses a combination of spreadsheets, Python and procedurally generated R code to filter, analyze and visualize data from a Micro-plate reader machine.
+Despite limitations Excel remains one of the most widely used application for data analysis in many fields. This software uses a combination of spreadsheets, Python and procedurally generated R code to filter, analyze and visualize data from a Micro-plate reader machine.
 
 ###Documentation: WIP
 
