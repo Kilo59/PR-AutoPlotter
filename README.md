@@ -3,6 +3,8 @@
 
 Despite limitations Excel remains one of the most widely used application for data analysis in many fields. This software uses a combination of spreadsheets, Python and procedurally generated R code to filter, analyze and visualize data from a Micro-plate reader machine.
 
+###Still in ALPHA
+If you run into an error while exectuing please contact me or create an issue.
 ###Documentation: WIP
 
 ##What is this?
