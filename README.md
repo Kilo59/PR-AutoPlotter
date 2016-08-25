@@ -86,7 +86,7 @@ plotly_username | Text String | Replace with your plotly username. Not needed if
 ##Example
 An example CSV file has been provided in the 'examples' folder within 'auto_plotter'. To peform a test run; follow these steps after the initial setup.
 * Move the 'raw_plate_reader.csv' to the same folder as the main script.
-* Check the cofig settings and modify them where appropriate. Reccomending setting post2google = False for the first few runs.
+* Check the config settings and modify them where appropriate. Reccomending setting post2google = False for the first few runs.
 * Run the main script from the command line or built in Python IDLE (recommended)
 * Depending on your config settings and well label names and groups you should notice new ggplot.png files and a grouping.R file being created within the main 'auto_plotter' folder.
 
