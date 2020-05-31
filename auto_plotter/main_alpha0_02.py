@@ -241,8 +241,7 @@ def get_grouping_data():
     g8 = well_grouping.col_values(8)
     g9 = well_grouping.col_values(9)
     g10 = well_grouping.col_values(10)
-    g_list = [g1, g2, g3, g4, g5, g6, g7, g8, g9, g10]
-    return g_list
+    return [g1, g2, g3, g4, g5, g6, g7, g8, g9, g10]
 ##############|Start|##########
 print("dataWrangle1.py")
 print("############|START|##########")

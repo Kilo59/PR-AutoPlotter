@@ -14,8 +14,7 @@ parser.read('config.ini')
 #TODO fix errors when run from commandline
 #TODO consilidate into single class
 def get_tolerance(req_name):
-    tolerance = parser.getfloat('tolerance', req_name)
-    return tolerance
+    return parser.getfloat('tolerance', req_name)
 
 def get_start_cond(condition_name):
     condition = parser.get('start_conditions', condition_name)
@@ -80,8 +79,7 @@ def count_columns_CSV(string_filename):
     return ncol
 
 def count_rowsXcols(string_filename):
-    result = count_columns_CSV(string_filename) * count_rows_CSV(string_filename)
-    return result
+    return count_columns_CSV(string_filename) * count_rows_CSV(string_filename)
 
 ####CSV input
 def firstRow_CSV_reader(string_filename):
@@ -94,7 +92,7 @@ def skipRows_CSV_reader(string_filename, num_skiped_rows):
     csv_as_list = []
     with open(string_filename, newline='') as csvfile:
         reader1 = csv.reader(csvfile, delimiter=',', quotechar='|')
-        for number in range(1, num_skiped_rows + 1):
+        for _ in range(1, num_skiped_rows + 1):
             next(reader1)
         for i in reader1:
             csv_as_list.append(i)
@@ -110,20 +108,19 @@ def readAll_CSV_reader(string_filename):
 
 def csv_list_of_lists(string_filename):
     #check that file exists
-    if check_file(string_filename) == True:
-        headers = firstRow_CSV_reader(string_filename)
-        with open(string_filename) as csvfile:
-            reader3 = csv.DictReader(csvfile)
-            list1 = [[] for x in range(len(headers))]
-            for ls, header in zip(list1, headers):
-                ls.append(header)
-            for row in reader3:
-                #print(row['Time'], row['Well 101'], row['Well 300'])
-                for col_list in list1:
-                    col_list.append(row[col_list[0]])
-        return list1
-    else:
+    if check_file(string_filename) != True:
         return []
+    headers = firstRow_CSV_reader(string_filename)
+    with open(string_filename) as csvfile:
+        reader3 = csv.DictReader(csvfile)
+        list1 = [[] for x in range(len(headers))]
+        for ls, header in zip(list1, headers):
+            ls.append(header)
+        for row in reader3:
+            #print(row['Time'], row['Well 101'], row['Well 300'])
+            for col_list in list1:
+                col_list.append(row[col_list[0]])
+    return list1
 
 def check_file(filename):
     filefound = True
@@ -169,9 +166,9 @@ def cols_to_rows_list(list_of_columns):
     #lists should have the same length
     list_of_rows = list_n( len(list_of_columns[0]) )
     for index, row in enumerate(list_of_rows):
-        for ls_index in range( len(list_of_columns) ):
+        for list_of_column in list_of_columns:
             #print(index, ls_index)
-            row.append(list_of_columns[ls_index][index])
+            row.append(list_of_column[index])
     return list_of_rows
 
 def multiCol_CSV(filename, list_of_columns):
@@ -188,8 +185,8 @@ def singleCol_CSV(string_filename, string_header, item_list):
     with open(string_filename, 'w', newline='') as csvfile:
         writer1 = csv.writer(csvfile, delimiter= ',')
         writer1.writerow([string_header])
-        for i in range(len(item_list)):
-            writer1.writerow([item_list[i]])
+        for item in item_list:
+            writer1.writerow([item])
     return
 
 #Columns must be past be passed in as a list of lists, each with the same length
@@ -281,23 +278,22 @@ def group_names(g_list):
     lists = 10
     for index, g in enumerate(g_list):
         # remove empty values
-        for i in range(len(g)):
+        for item in g:
             if g.count('') > 0:
                 del g[g.index('')]
         if len(g) <= 1:
             #del g[g.index(g[0])]
             lists -= 1
     g_list = g_list[:lists]
-    group_list = [g_list[x][0] for x in range(0, len(g_list))]
-    return group_list
+    return [g_list[x][0] for x in range(len(g_list))]
 #return list of wells within groups (absent the group_name header)
 def group_items(g_list):
     #cleanup lists
     lists = 10
     for index, g in enumerate(g_list):
         # remove empty values
-        #print(index, g) #Testing
-        for i in range(len(g)):
+                #print(index, g) #Testing
+        for item in g:
             if g.count('') > 0:
                 del g[g.index('')]
         if len(g) <= 1:
@@ -306,7 +302,7 @@ def group_items(g_list):
             #print('*DELETE')
             lists -= 1
     g_list = g_list[:lists]
-    group_list = [g_list[x][0] for x in range(0, len(g_list))]
+    group_list = [g_list[x][0] for x in range(len(g_list))]
     #remove header
     for index, ls in enumerate(g_list):
         group_list[index] = ls[0]
@@ -363,14 +359,13 @@ def exec_script2(command, script_name, arg_list):
 
 #return an empty list of lists of variable size
 def list_n(size_of_list):
-    ls = [[] for i in range(size_of_list)]
-    return ls
+    return [[] for i in range(size_of_list)]
 
 def csv_dialect():
     print(csv.list_dialects)
     return
 
 def print_data_lists(list_of_lists):
-    for i in range(len(list_of_lists)):
-        print(list_of_lists[i][0], list_of_lists[i][1:])
+    for list_of_list in list_of_lists:
+        print(list_of_list[0], list_of_list[1:])
     return

@@ -9,8 +9,7 @@ def currentTime():
     hour = int('%d' % now.hour)
     minute = int('%d' % now.minute)
     second = int('%d' % now.second)
-    Time = (hour*3600) + (minute*60) + second
-    return Time
+    return (hour*3600) + (minute*60) + second
 
 def system_time():
     date = time.localtime(time.time())
@@ -18,20 +17,19 @@ def system_time():
     hour = '%d' % now.hour
     minute = '%d' % now.minute
     second = '%d' % now.second
-    currentTime = str(hour) +':'+ str(minute) +':'+ str(second)
-    return currentTime
+    return str(hour) +':'+ str(minute) +':'+ str(second)
 
 def calc_runTime(start, end):
     Time = end - start
     seconds = Time
-    if Time >= 1:
-        if Time > 60:
+    if seconds >= 1:
+        if seconds > 60:
             minutes = int(Time / 60)
             seconds = Time % 60
             return 'RunTime: ' + str(minutes) + ' minute ' + str(seconds) + ' second'
         else:
-            return 'RunTime: ' + str(Time) + ' second(s)'
-    if Time < 1:
+            return 'RunTime: ' + str(seconds) + ' second(s)'
+    if seconds < 1:
         return 'RunTime: <1 second'
 
 def pause(seconds_to_pause):

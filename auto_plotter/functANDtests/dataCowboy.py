@@ -72,5 +72,4 @@ def list_sum(number_list):
 def list_mean(number_list):
     sum_ls = list_sum(number_list)
     n = len(number_list)
-    mean = sum_ls/n
-    return mean
+    return sum_ls/n
